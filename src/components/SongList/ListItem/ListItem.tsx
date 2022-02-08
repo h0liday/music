@@ -12,11 +12,25 @@ const ListItem: FC<ListItemProps> = ({ song }) => {
       <img alt={"album img"} src={song["im:image"][0].label} />
       <div className="description">
         <div className="text fw-bold">
-          <a className="link" rel="noreferrer" href={song.link.attributes.href} target="_blank">
+          <a
+            className="link"
+            rel="noreferrer"
+            href={song.link.attributes.href}
+            target="_blank"
+          >
             {song["im:name"].label}
           </a>
         </div>
-        <div className="text">{song["im:artist"].label}</div>
+        <div className="text">
+          <a
+            className="link"
+            rel="noreferrer"
+            href={song["im:artist"].attributes?.href || "https://music.apple.com/us/artist"}
+            target="_blank"
+          >
+            {song["im:artist"].label}
+          </a>
+        </div>
         <div className="other">
           <div className="secondaryText">
             Songs:{" "}

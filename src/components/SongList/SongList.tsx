@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Alert } from "react-bootstrap";
 import { Song } from "../../models/SongModel";
+import { filterSongsByTitle } from "../../utils/helper";
 import SearchInput from "../SearchInput/SearchInput";
 import ListItem from "./ListItem/ListItem";
 import "./SongList.css";
@@ -15,15 +16,23 @@ const SongList: FC<SongListProps> = ({ songs }) => {
     setSearchValue(value);
   };
 
-  console.log(songs);
+  const filteredSongs = filterSongsByTitle(songs, searchValue);
 
   return (
     <div className="wrapper">
-      <SearchInput placeholder={"Search by Album Title"} onChange={handleSearchChange} value={searchValue} />
+      <SearchInput
+        placeholder={"Search by Album Title"}
+        onChange={handleSearchChange}
+        value={searchValue}
+      />
       <ListGroup>
-        {songs.map((song) => (
-          <ListItem key={song.id.label} song={song} />
-        ))}
+        {filteredSongs.length > 0 ? (
+          filteredSongs.map((song) => (
+            <ListItem key={song.id.label} song={song} />
+          ))
+        ) : (
+          <Alert>There are no results</Alert>
+        )}
       </ListGroup>
     </div>
   );
