@@ -1,10 +1,31 @@
 import "./App.css";
-import { Container, Row, Col, Alert, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Alert,
+  Spinner,
+  Tabs,
+  Tab,
+} from "react-bootstrap";
 import SongList from "../SongList/SongList";
 import { useGetTopSongs } from "../../hooks/useGetTopSongs";
+import { useState } from "react";
+import FavoriteSongs from "../FavoriteSongs/FavoriteSongs";
 
 function App() {
   const { error, loading, songs } = useGetTopSongs();
+  const [favoritedSongsIds, setFavoritedSongsIds] = useState<string[]>([]);
+
+  const handleSetFavoriteSong = (songId: string) => {
+    const copiedFavoriteSongIds = [...favoritedSongsIds];
+    if (copiedFavoriteSongIds.includes(songId)) {
+      setFavoritedSongsIds(copiedFavoriteSongIds.filter((id) => id !== songId));
+    } else {
+      copiedFavoriteSongIds.push(songId);
+      setFavoritedSongsIds(copiedFavoriteSongIds);
+    }
+  };
 
   const renderAppContent = () => {
     if (error) {
@@ -21,12 +42,35 @@ function App() {
 
     if (songs.length > 0) {
       return (
-        <Row className={"justify-content-center"} >
-          <Col xs={12} md={8}>
-            <h3 className="fw-bold">ITunes Top Albums</h3>
-            <SongList songs={songs} />
-          </Col>
-        </Row>
+        <Tabs
+          defaultActiveKey="top"
+          id="uncontrolled-tab-example"
+          className="mb-3"
+        >
+          <Tab eventKey="top" title="Top Albums">
+            <Row className={"justify-content-center"}>
+              <Col xs={12} md={8}>
+                <h3 className="fw-bold">ITunes Top Albums</h3>
+                <SongList
+                  songs={songs}
+                  onFavorite={handleSetFavoriteSong}
+                  favoritedSongsIds={favoritedSongsIds}
+                />
+              </Col>
+            </Row>
+          </Tab>
+          <Tab eventKey="favorite" title="Favorite Albums">
+            <Row className={"justify-content-center"}>
+              <Col xs={12} md={8}>
+                <h3 className="fw-bold">Favorite Albums</h3>
+                <FavoriteSongs
+                  songs={songs}
+                  favoritedSongsIds={favoritedSongsIds}
+                />
+              </Col>
+            </Row>
+          </Tab>
+        </Tabs>
       );
     }
 

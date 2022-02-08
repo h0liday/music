@@ -8,9 +8,15 @@ import ListItem from "./ListItem/ListItem";
 import "./SongList.css";
 interface SongListProps {
   songs: Song[];
+  onFavorite: (songId: string) => void;
+  favoritedSongsIds: string[];
 }
 
-const SongList: FC<SongListProps> = ({ songs }) => {
+const SongList: FC<SongListProps> = ({
+  songs,
+  onFavorite,
+  favoritedSongsIds,
+}) => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -51,7 +57,13 @@ const SongList: FC<SongListProps> = ({ songs }) => {
       <ListGroup>
         {filteredSongs.length > 0 ? (
           filteredSongs.map((song) => (
-            <ListItem key={song.id.label} song={song} />
+            <ListItem
+              key={song.id.label}
+              song={song}
+              favoritedSongsIds={favoritedSongsIds}
+              onFavorite={onFavorite}
+              withFavorite
+            />
           ))
         ) : (
           <Alert>There are no results</Alert>

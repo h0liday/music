@@ -1,12 +1,22 @@
 import { FC } from "react";
 import { ListGroup, Badge } from "react-bootstrap";
 import { Song } from "../../../models/SongModel";
+import { ReactComponent as HeartIcon } from "../../../assets/images/heart.svg";
+import { ReactComponent as HeartEmptyIcon } from "../../../assets/images/heart-empty.svg";
 import "./ListItem.css";
 interface ListItemProps {
   song: Song;
+  onFavorite?: (songId: string) => void;
+  favoritedSongsIds: string[];
+  withFavorite?: boolean;
 }
 
-const ListItem: FC<ListItemProps> = ({ song }) => {
+const ListItem: FC<ListItemProps> = ({
+  song,
+  onFavorite,
+  favoritedSongsIds,
+  withFavorite,
+}) => {
   return (
     <ListGroup.Item key={song.id.label} className="d-flex align-items-start">
       <img alt={"album img"} src={song["im:image"][0].label} />
@@ -25,7 +35,10 @@ const ListItem: FC<ListItemProps> = ({ song }) => {
           <a
             className="link"
             rel="noreferrer"
-            href={song["im:artist"].attributes?.href || "https://music.apple.com/us/artist"}
+            href={
+              song["im:artist"].attributes?.href ||
+              "https://music.apple.com/us/artist"
+            }
             target="_blank"
           >
             {song["im:artist"].label}
@@ -52,7 +65,21 @@ const ListItem: FC<ListItemProps> = ({ song }) => {
           </div>
         </div>
       </div>
-      <div></div>
+      {withFavorite && (
+        <div className={"actions"}>
+          {favoritedSongsIds.includes(song.id.label) ? (
+            <HeartIcon
+              className={"icon"}
+              onClick={() => onFavorite?.(song.id.label)}
+            />
+          ) : (
+            <HeartEmptyIcon
+              className={"icon"}
+              onClick={() => onFavorite?.(song.id.label)}
+            />
+          )}
+        </div>
+      )}
     </ListGroup.Item>
   );
 };
