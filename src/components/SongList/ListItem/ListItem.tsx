@@ -7,7 +7,7 @@ import "./ListItem.css";
 interface ListItemProps {
   song: Song;
   onFavorite?: (songId: string) => void;
-  favoritedSongsIds: string[];
+  favoritedSongsIds?: string[];
   withFavorite?: boolean;
 }
 
@@ -67,7 +67,7 @@ const ListItem: FC<ListItemProps> = ({
       </div>
       {withFavorite && (
         <div className={"actions"}>
-          {favoritedSongsIds.includes(song.id.label) ? (
+          {favoritedSongsIds?.includes(song.id.label) ? (
             <HeartIcon
               className={"icon"}
               onClick={() => onFavorite?.(song.id.label)}

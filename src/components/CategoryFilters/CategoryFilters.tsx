@@ -24,6 +24,7 @@ const CategoryFilters: FC<CategoryFiltersProps> = ({
       <div className="filtersBox">
         {songCategories.map((category) => (
           <Button
+            key={category}
             variant="outline-primary"
             onClick={() => onCategoryClick(category)}
             active={selectedCategories.includes(category)}

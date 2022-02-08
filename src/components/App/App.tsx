@@ -30,14 +30,14 @@ function App() {
   const renderAppContent = () => {
     if (error) {
       return (
-        <Alert>
+        <Alert variant="danger">
           Error occured while fetching data, please try again later.
         </Alert>
       );
     }
 
     if (loading) {
-      return <Spinner animation="border" variant="primary" />;
+      return <Spinner animation="border" variant="primary" role={"spinner"}/>;
     }
 
     if (songs.length > 0) {
@@ -47,7 +47,7 @@ function App() {
           id="uncontrolled-tab-example"
           className="mb-3"
         >
-          <Tab eventKey="top" title="Top Albums">
+          <Tab eventKey="top" title="Top Albums" data-testid="top">
             <Row className={"justify-content-center"}>
               <Col xs={12} md={8}>
                 <h3 className="fw-bold">ITunes Top Albums</h3>
@@ -59,7 +59,7 @@ function App() {
               </Col>
             </Row>
           </Tab>
-          <Tab eventKey="favorite" title="Favorite Albums">
+          <Tab eventKey="favorite" title="Favorite Albums" data-testid="favorite">
             <Row className={"justify-content-center"}>
               <Col xs={12} md={8}>
                 <h3 className="fw-bold">Favorite Albums</h3>

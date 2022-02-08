@@ -1,8 +1,8 @@
 interface CategoryAttributes {
-  im: string;
   label: string;
   scheme: string;
   term: string;
+  ["im:id"]: string;
 }
 
 interface IdAttributes {
@@ -27,7 +27,7 @@ interface SongId {
 }
 
 interface SongArtist {
-  attributes: ArtistAttributes;
+  attributes?: ArtistAttributes;
   label: string;
 }
 

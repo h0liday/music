@@ -24,7 +24,6 @@ const FavoriteSongs: FC<FavoriteSongsProps> = ({
             <ListItem
               key={song.id.label}
               song={song}
-              favoritedSongsIds={favoritedSongsIds}
             />
           ))
         ) : (
