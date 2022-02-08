@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
 import { ListGroup, Alert } from "react-bootstrap";
 import { Song } from "../../models/SongModel";
-import { filterSongsByTitle } from "../../utils/helper";
+import { filterSongs } from "../../utils/helper";
+import CategoryFilters from "../CategoryFilters/CategoryFilters";
 import SearchInput from "../SearchInput/SearchInput";
 import ListItem from "./ListItem/ListItem";
 import "./SongList.css";
@@ -11,15 +12,37 @@ interface SongListProps {
 
 const SongList: FC<SongListProps> = ({ songs }) => {
   const [searchValue, setSearchValue] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
   };
 
-  const filteredSongs = filterSongsByTitle(songs, searchValue);
+  const handleClickCategory = (categoryName: string) => {
+    const copiedCategories = [...selectedCategories];
+    if (copiedCategories.includes(categoryName)) {
+      setSelectedCategories(
+        copiedCategories.filter((category) => category !== categoryName)
+      );
+    } else {
+      copiedCategories.push(categoryName);
+      setSelectedCategories(copiedCategories);
+    }
+  };
+
+  const filteredSongs = filterSongs({
+    categories: selectedCategories,
+    songs,
+    title: searchValue,
+  });
 
   return (
     <div className="wrapper">
+      <CategoryFilters
+        songs={songs}
+        onCategoryClick={handleClickCategory}
+        selectedCategories={selectedCategories}
+      />
       <SearchInput
         placeholder={"Search by Album Title"}
         onChange={handleSearchChange}

@@ -21,13 +21,10 @@ function App() {
 
     if (songs.length > 0) {
       return (
-        <Row>
+        <Row className={"justify-content-center"} >
           <Col xs={12} md={8}>
             <h3 className="fw-bold">ITunes Top Albums</h3>
             <SongList songs={songs} />
-          </Col>
-          <Col xs={12} md={4}>
-            2 of 2
           </Col>
         </Row>
       );

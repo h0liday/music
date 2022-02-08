@@ -1,0 +1,10 @@
+.wrapper {
+    margin: 16px 0px;
+}
+
+.filtersBox {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 0;
+}
