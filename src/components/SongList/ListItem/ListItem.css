@@ -1,0 +1,27 @@
+.description {
+    display: flex;
+    flex-direction: column;
+    padding-left: 8px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.text {
+    text-align: left;
+}
+
+.other {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 8px;
+}
+
+.secondaryText {
+    font-size: 12px;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}

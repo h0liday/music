@@ -1,16 +1,31 @@
-import { FC } from "react";
-import { Stack } from "react-bootstrap";
-import { useGetTopSongs } from "../../hooks/useGetTopSongs";
+import { FC, useState } from "react";
+import { ListGroup } from "react-bootstrap";
+import { Song } from "../../models/SongModel";
+import SearchInput from "../SearchInput/SearchInput";
+import ListItem from "./ListItem/ListItem";
+import "./SongList.css";
+interface SongListProps {
+  songs: Song[];
+}
 
-const SongList: FC = () => {
-  const { error, isLoading, songs } = useGetTopSongs();
+const SongList: FC<SongListProps> = ({ songs }) => {
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+  };
+
+  console.log(songs);
 
   return (
-    <Stack gap={3}>
-      <div className="bg-light border">First item</div>
-      <div className="bg-light border">Second item</div>
-      <div className="bg-light border">Third item</div>
-    </Stack>
+    <div className="wrapper">
+      <SearchInput placeholder={"Search by Album Title"} onChange={handleSearchChange} value={searchValue} />
+      <ListGroup>
+        {songs.map((song) => (
+          <ListItem key={song.id.label} song={song} />
+        ))}
+      </ListGroup>
+    </div>
   );
 };
 
